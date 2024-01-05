@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import argparse
 import pandas as pd
@@ -17,8 +19,10 @@ args = parser.parse_args()
 if args.Domain: 
     domain = args.Domain
 else:
-    print("Domain not specified, using enterprise-attack")
-    domain = "enterprise-attack"
+    parser.print_help()
+    sys.exit(0)
+    #print("Domain not specified, using enterprise-attack")
+    #domain = "enterprise-attack"
 
 # List of columns to be extracted into new dataframe
 extract_col = ['target name', 'description', 'mapping description', 'url', 'ID', 'name', 'detection', 'source ID', 'source name', 'tactics']
