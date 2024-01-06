@@ -1,6 +1,8 @@
 # mitreattack-plextrac_csv
 Simple Python script to create findings database as CSV for import to PlexTrac
 
+This script specifically maps MITRE Technique ID's (e.g, T1548) with associated MITRE Mitigation ID's (e.g, M1047, M1038, M1028, M1026, M1022) allowing the Technique ID to be usefully duplicated such that you can choose the exact mitigation needed for the finding instead of having all possible mitigations, causing the report recipient to guess what applies to them, or the report writer to remove extraneous information.
+
 
 ## install requirements first
 ``pip install -r requirements.txt``
