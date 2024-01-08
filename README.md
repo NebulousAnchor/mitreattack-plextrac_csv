@@ -1,6 +1,9 @@
 # mitreattack-plextrac_csv
 Simple Python script to create findings database as CSV for import to PlexTrac
 
+This script specifically maps MITRE Technique ID's (e.g, T1548) with associated MITRE Mitigation ID's (e.g, M1047, M1038, M1028, M1026, M1022) allowing the Technique ID to be usefully duplicated such that you can choose the exact mitigation needed for the finding instead of having all possible mitigations, causing the report recipient to guess what applies to them, or the report writer to remove extraneous information.
+
+
 ## install requirements first
 ``pip install -r requirements.txt``
 
@@ -25,3 +28,13 @@ python3 mitreattack-plextrac_csv.py -d enterprise-attack
 parsing techniques: 100%|███████████████████████████| 625/625 [00:00<00:00, 2798.17it/s]
 parsing relationships for type=technique: 100%|████████████████████████| 17202/17202 [00:00<00:00, 29649.17it/s]
 ```
+## Example of the data
+```
+                                 title severity                                        description                                    recommendations                                 references tags MITRE Technique ID               MITRE Technique Name                          MITRE Technique Detection MIRE Mitigation ID                    MITRE Mitigation Name                MITRE Technique Tactics
+0  Abuse Elevation Control Mechanism-1   medium  Adversaries may circumvent mechanisms designed...  Check for common UAC bypass weaknesses on Wind...  https://attack.mitre.org/techniques/T1548                   T1548  Abuse Elevation Control Mechanism  Monitor the file system for files that have th...              M1047                                    Audit  Defense Evasion, Privilege Escalation
+1  Abuse Elevation Control Mechanism-2   medium  Adversaries may circumvent mechanisms designed...  System settings can prevent applications from ...  https://attack.mitre.org/techniques/T1548                   T1548  Abuse Elevation Control Mechanism  Monitor the file system for files that have th...              M1038                     Execution Prevention  Defense Evasion, Privilege Escalation
+2  Abuse Elevation Control Mechanism-3   medium  Adversaries may circumvent mechanisms designed...  Applications with known vulnerabilities or kno...  https://attack.mitre.org/techniques/T1548                   T1548  Abuse Elevation Control Mechanism  Monitor the file system for files that have th...              M1028           Operating System Configuration  Defense Evasion, Privilege Escalation
+3  Abuse Elevation Control Mechanism-4   medium  Adversaries may circumvent mechanisms designed...  Remove users from the local administrator grou...  https://attack.mitre.org/techniques/T1548                   T1548  Abuse Elevation Control Mechanism  Monitor the file system for files that have th...              M1026            Privileged Account Management  Defense Evasion, Privilege Escalation
+4  Abuse Elevation Control Mechanism-5   medium  Adversaries may circumvent mechanisms designed...  The sudoers file should be strictly edited suc...  https://attack.mitre.org/techniques/T1548                   T1548  Abuse Elevation Control Mechanism  Monitor the file system for files that have th...              M1022  Restrict File and Directory Permissions  Defense Evasion, Privilege Escalation
+```
+![image](https://github.com/NebulousAnchor/mitreattack-plextrac_csv/assets/40901091/084521b4-ec63-4d83-bee0-2193a4e612ae)
