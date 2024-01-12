@@ -78,6 +78,7 @@ data2 = data.loc[:, extract_col]
 data2 = data2.rename(columns=rename_col)
 data2.insert(1, "severity", "medium", allow_duplicates=False)
 data2.insert(5, "tags", '', allow_duplicates=False)
+data2["tags"] = data2[["MITRE Mitigation ID", "MITRE Technique ID"]].agg(','.join, axis=1)
 
 # Add Identifier to 'Title' column if there are duplicate titles
 data2['title'] = np.where(data2['title'].duplicated(keep=False),data2['title'] + '-' + data2.groupby('title').cumcount().add(1).astype(str),data2['title'])
