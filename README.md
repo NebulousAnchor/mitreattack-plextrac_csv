@@ -11,23 +11,45 @@ This script specifically maps MITRE Technique ID's (e.g, T1548) with associated 
 ```
 python3 mitreattack-plextrac_csv.py 
 
-usage: MITRE-Plextrac.py [-h] [-d DOMAIN]
+usage: MITRE-Plextrac.py [-h] [-d DOMAIN] [-l] [-a] [-t TENANT] [-U USERNAME] [-P PASSWORD] [-r REPOSITORY] [-f FILE]
 
 Convert MITRE ATT&CK Excel spreadsheet to PlexTrac CSV file
 
 options:
   -h, --help            show this help message and exit
-  -d DOMAIN, --Domain DOMAIN
+  -d DOMAIN, --domain DOMAIN
                         MITRE ATT&CK Domain e.g: enterprise-attack, ics-attack, mobile-attack
+  -l, --list            List all PlexTrac Repositories in Tenant
+  -a, --api             PlexTrac API URL Non-MFA
+  -t TENANT, --tenant TENANT
+                        PlexTrac Tenant
+  -U USERNAME, --username USERNAME
+                        PlexTrac Username
+  -P PASSWORD, --password PASSWORD
+                        PlexTrac Password
+  -r REPOSITORY, --repository REPOSITORY
+                        PlexTrac Repository ID
+  -f FILE, --file FILE  If you want to use a local CSV file instead of generating one from MITRE ATT&CK
 ```
 
-## Specify a domain to use
+## Specify a domain to use for local CSV copy only
 ```
 python3 mitreattack-plextrac_csv.py -d enterprise-attack
 2024-01-05 13:57:04.785 | INFO     | mitreattack.attackToExcel.attackToExcel:get_stix_data:69 - Downloading ATT&CK data from github.com/mitre/cti
 parsing techniques: 100%|███████████████████████████| 625/625 [00:00<00:00, 2798.17it/s]
 parsing relationships for type=technique: 100%|████████████████████████| 17202/17202 [00:00<00:00, 29649.17it/s]
 ```
+
+## Specify a PlexTrac Tenant and Authentication Information to List Respositiories or Upload to a specific Repository
+```
+python3 MITRE-Plextrac.py -a -t 'example.plextrac.com' -U '{username}' -P '{password}' -r '{repositoryID}' -d 'enterprise-attack'
+2024-01-20 15:22:29.555 | INFO     | mitreattack.attackToExcel.attackToExcel:get_stix_data:69 - Downloading ATT&CK data from github.com/mitre/cti
+parsing techniques: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 625/625 [00:00<00:00, 2868.09it/s]
+parsing relationships for type=technique: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 17202/17202 [00:00<00:00, 32335.19it/s]
+Authentication Successful
+CSV Upload Successful
+```
+
 ## Example of the data
 ```
                                  title severity                                        description                                    recommendations                                 references tags MITRE Technique ID               MITRE Technique Name                          MITRE Technique Detection MIRE Mitigation ID                    MITRE Mitigation Name                MITRE Technique Tactics
