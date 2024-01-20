@@ -17,10 +17,10 @@ parser.add_argument("-d", "--domain", help = "MITRE ATT&CK Domain e.g: enterpris
 parser.add_argument("-l", "--list", action='store_true', help = "List all PlexTrac Repositories in Tenant")
 parser.add_argument("-a", "--api", action='store_true', help = "PlexTrac API URL Non-MFA")
 parser.add_argument("-t", "--tenant", action="store", type=str, help = "PlexTrac Tenant")   
-parser.add_argument("-U", "--username", help = "PlexTrac Username")
-parser.add_argument("-P", "--password", help = "PlexTrac Password")
-parser.add_argument("-r", "--repository", help = "PlexTrac Repository ID")
-parser.add_argument("-f", "--file", help = "If you want to use a local CSV file instead of generating one from MITRE ATT&CK")
+parser.add_argument("-U", "--username", action="store", type=str, help = "PlexTrac Username")
+parser.add_argument("-P", "--password", action="store", type=str, help = "PlexTrac Password")
+parser.add_argument("-r", "--repository", action="store", type=str, help = "PlexTrac Repository ID")
+parser.add_argument("-f", "--file", action="store", type=str, help = "If you want to use a local CSV file instead of generating one from MITRE ATT&CK")
 
 
 # Read arguments from command line
@@ -36,7 +36,7 @@ if args.list and not (args.tenant and args.username and args.password):
     print("When Using PlexTrac API you must specify the following arguments: Tenant, Username, Password, Repository\n")
     parser.print_help()
     sys.exit(0)
-else:
+elif args.list:
     # Define the API endpoint URL
     auth_url = "https://" + args.tenant + "/api/v1/authenticate"
     data = {'username': args.username, 'password': args.password}
