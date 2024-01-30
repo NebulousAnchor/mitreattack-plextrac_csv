@@ -54,8 +54,8 @@ elif args.list:
     if response.status_code == 200:
         print("List Repositories Successful")
         repos = response.json()
-        df = pd.DataFrame(repos["data"], columns=['abbreviation', 'createdAt', 'createdBy', 'description', 'isDeleted', 'name', 'repositoryId', 'repositoryType', 'repositoryUsers', 'tenantId', 'updatedAt', 'writeupsCount', 'doc_type'])
-        output = df.loc[:, ['name','repositoryId', 'writeupsCount']]
+        df = pd.DataFrame(repos["data"], columns=['abbreviation', 'created_at', 'created_by', 'description', 'is_deleted', 'name', 'repository_id', 'repository_type', 'repository_users', 'tenant_id', 'updated_at', 'writeups_count', 'doc_type'])
+        output = df.loc[:, ['name','repository_id', 'writeups_count']]
         print(output)
         sys.exit(0)  
 
@@ -66,8 +66,8 @@ else:
     # List of columns to be extracted into new dataframe
     extract_col = ['target name', 'description', 'mapping description', 'url', 'ID', 'name', 'detection', 'source ID', 'source name', 'tactics']
 
-    # Column remapping list
-    rename_col = {'target name': 'title', 'mapping description': 'recommendations', 'url': 'references', 'ID': 'MITRE Technique ID', 'name': 'MITRE Technique Name', 'detection': 'MITRE Technique Detection', 'source ID': 'MITRE Mitigation ID', 'source name': 'MITRE Mitigation Name', 'tactics': 'MITRE Technique Tactics'}
+    # Column remapping list [FYI column names are case sensitive and must be lowercase in PlexTrac CSV file]
+    rename_col = {'target name': 'title', 'mapping description': 'recommendations', 'url': 'references', 'ID': 'mitre_technique_id', 'name': 'mitre_technique_name', 'detection': 'mitre_technique_detection', 'source ID': 'mitre_mitigation_id', 'source name': 'mitre_mitigation_name', 'tactics': 'mitre_technique_tactics'}
 
     # Define the MITRE ATT&CK domain
     if not args.domain:
@@ -88,7 +88,7 @@ else:
     data2 = data2.rename(columns=rename_col)
     data2.insert(1, "severity", "medium", allow_duplicates=False)
     data2.insert(5, "tags", '', allow_duplicates=False)
-    data2["tags"] = data2[["MITRE Mitigation ID", "MITRE Technique ID"]].agg(','.join, axis=1)
+    data2["tags"] = data2[["mitre_mitigation_id", "mitre_technique_id"]].agg(','.join, axis=1)
 
     # Add Identifier to 'Title' column if there are duplicate titles
     data2['title'] = np.where(data2['title'].duplicated(keep=False),data2['title'] + '-' + data2.groupby('title').cumcount().add(1).astype(str),data2['title'])
