@@ -89,8 +89,16 @@ else:
     data2.insert(1, "severity", "medium", allow_duplicates=False)
     data2.insert(5, "tags", '', allow_duplicates=False)
     data2["tags"] = data2[["mitre_mitigation_id", "mitre_technique_id"]].agg(','.join, axis=1)
+    
+    if args.domain == "enterprise-attack":
+        title_add = "Enterprise"
+    elif args.domain == "ics-attack":
+        title_add = "ICS"
+    elif args.domain == "mobile-attack":
+        title_add = "Mobile"
 
-    # Add Identifier to 'Title' column if there are duplicate titles
+    # Add Identifier to 'Title' column to prevent data collisions between repositories with same finding title, or if there are duplicate titles in a repository add number to the end of the title
+    data2['title'] = np.where(data2['title'],data2['title'] + '-' + title_add,data2['title'])
     data2['title'] = np.where(data2['title'].duplicated(keep=False),data2['title'] + '-' + data2.groupby('title').cumcount().add(1).astype(str),data2['title'])
 
     csv_name = 'MITRE_to_PlexTrac_' + args.domain + '.csv'
